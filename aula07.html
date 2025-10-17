@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Site Pessoal</title>
+
+  <!-- Bootstrap 4.1 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+  <style>
+    /* Cores personalizadas e melhorias visuais */
+    :root {
+      --primary: #77ff6b;
+      --secondary: #4ecdb4;
+      --dark: #167d48;
+      --light: #f7fff7;
+      --accent: #ccff6d;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    }
+
+    .navbar-brand, .nav-link {
+      color: white !important;
+      font-weight: 600;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #a2ff9a 0%, #c4fae7 100%);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .btn-custom {
+      background: var(--dark);
+      border-color: var(--dark);
+      color: white;
+      font-weight: bold;
+      padding: 10px 25px;
+      border-radius: 30px;
+    }
+    .btn-custom:hover {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    .card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    .card-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .team-member img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border: 4px solid var(--secondary);
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+    .social-icon {
+      color: white;
+      font-size: 1.5rem;
+      margin: 0 10px;
+      transition: color 0.3s;
+    }
+    .social-icon:hover {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">Colorido<span class="font-weight-bold">.io</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#home">Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="#features">Recursos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#team">Equipe</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container">
+      <h1 class="display-4 font-weight-bold">Bem-vindo(a) ao StartAqui</h1>
+      <p class="lead">Um site vibrante, moderno e cheio de recursos com Bootstrap 4.1!</p>
+      <a href="#features" class="btn btn-custom mt-3">Explorar</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="text-center mb-5 text-primary">Recursos Incríveis</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card text-center p-4 shadow-sm">
+            <div class="card-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h5 class="card-title">Rápido & Leve</h5>
+            <p class="card-text">Desempenho otimizado para carregar em qualquer dispositivo.</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card text-center p-4 shadow-sm">
+            <div class="card-icon">
+              <i class="fas fa-palette"></i>
+            </div>
+            <h5 class="card-title">Design Colorido</h5>
+            <p class="card-text">Paleta vibrante que chama a atenção e encanta os visitantes.</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card text-center p-4 shadow-sm">
+            <div class="card-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h5 class="card-title">Totalmente Responsivo</h5>
+            <p class="card-text">Funciona perfeitamente em celulares, tablets e desktops.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-5 text-secondary">Nossa Equipe</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-3 text-center mb-4 team-member">
+          <img src="https://s2-g1.glbimg.com/ZkBhHfGKc_Z_sKQEGw3ZKMY7i84=/0x0:1792x1792/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/E/o/r5PKxMQh6a3XJJ3f5hBA/luansantana.jpg" alt="Membro 1" class="mb-3">
+          <h5>Luan Santana</h5>
+          <p class="text-muted">Designer</p>
+        </div>
+        <div class="col-md-3 text-center mb-4 team-member">
+          <img src="https://www.lagoa87fm.com.br/wp-content/uploads/2023/03/mc-paiva.jpg" alt="Membro 2" class="mb-3">
+          <h5>MC Paiva</h5>
+          <p class="text-muted">Desenvolvedor</p>
+        </div>
+        <div class="col-md-3 text-center mb-4 team-member">
+          <img src="https://imageio.forbes.com/specials-images/imageserve/5ed56f207fe4060006bbce9a/0x0.jpg?format=jpg&crop=1080,1080,x0,y0,safe&height=416&width=416&fit=bounds" alt="Membro 3" class="mb-3">
+          <h5>Shawn Mendes</h5>
+          <p class="text-muted">Gerente de Projeto</p>
+        </div>
+        <div class="col-md-3 text-center mb-4 team-member">
+          <img src="https://www.rollingstone.com/wp-content/uploads/2019/11/CamilaCabello.jpg?w=1581&h=1054&crop=1" alt="Membro 3" class="mb-3">
+          <h5>Camila Cabello</h5>
+          <p class="text-muted">Analista</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 text-primary">Fale Conosco</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Seu Nome" required>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Seu E-mail" required>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" rows="4" placeholder="Sua Mensagem" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-block" style="background: var(--secondary); color: white; font-weight: bold;">
+              Enviar Mensagem
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Colorido.io – Todos os direitos reservados.</p>
+      <div class="mt-3">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts do Bootstrap 4.1 -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+          integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+          integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+          crossorigin="anonymous"></script>
+
+</body>
+</html>
