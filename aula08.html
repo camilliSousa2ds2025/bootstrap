@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <!-- Font Awesome para ícones -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       padding-top: 56px;
@@ -75,6 +77,13 @@
       color: #fff;
     }
 
+    /* Cards de gráficos */
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin-bottom: 20px;
+    }
+
     /* Responsivo */
     @media (max-width: 768px) {
       #sidebar {
@@ -90,12 +99,15 @@
         margin-left: 250px;
       }
     }
+    .fundo-roxo { 
+      background-color: #9d00ff; 
+    }
   </style>
 </head>
 <body>
 
   <!-- Navbar Superior -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark fundo-roxo fixed-top"> 
     <div class="container-fluid">
       <button type="button" id="sidebarCollapse" class="btn">
         <i class="fas fa-bars"></i>
@@ -138,13 +150,13 @@
         <a href="#"><i class="fas fa-chart-line mr-2"></i> Relatórios</a>
       </li>
       <li>
-        <a href="#"><i class="fas fa-cog mr-2"></i> Configurações</a>
-      </li>
-      <li>
         <a href="#"><i class="fas fa-box mr-2"></i> Pedidos</a>
       </li>
       <li>
         <a href="#"><i class="fas fa-life-ring mr-2"></i> Suporte</a>
+      </li>
+      <li>
+        <a href="#"><i class="fas fa-cog mr-2"></i> Configurações</a>
       </li>
     </ul>
   </nav>
@@ -154,6 +166,8 @@
     <div class="container-fluid">
       <h2>Dashboard</h2>
       <p class="lead">Bem-vindo ao sistema de gerenciamento. Use o menu lateral para navegar.</p>
+      
+      <!-- Cards de métricas -->
       <div class="row">
         <div class="col-md-4">
           <div class="card text-white bg-primary mb-3">
@@ -167,7 +181,7 @@
           <div class="card text-white bg-success mb-3">
             <div class="card-body">
               <h5 class="card-title">Vendas Hoje</h5>
-              <p class="card-text display-4">R$ 5.230</p>
+              <p class="card-text display-4">R$ 6.290</p>
             </div>
           </div>
         </div>
@@ -182,27 +196,82 @@
         <div class="col-md-4">
           <div class="card text-white bg-warning mb-3">
             <div class="card-body">
+              <h5 class="card-title">Total de Gastos</h5>
+              <p class="card-text display-4">R$10.456</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
               <h5 class="card-title">Clientes Inativos</h5>
               <p class="card-text display-4">10</p>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-white bg-primary mb-3">
-              <div class="card-body">
-                <h5 class="card-title">Total de Gastos</h5>
-                <p class="card-text display-4">R$1.500</p>
+          <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Total de Vendas</h5>
+              <p class="card-text display-4">R$ 35.782</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Gráficos -->
+      <div class="row mt-4">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Vendas Mensais</h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="salesChart"></canvas>
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card text-white bg-success mb-3">
-              <div class="card-body">
-                <h5 class="card-title"> Total de Vendas </h5>
-                <p class="card-text display-4">R$ 34.087</p>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Distribuição de Clientes</h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="clientsChart"></canvas>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Vendas por Categoria</h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="categoryChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Desempenho da Equipe</h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="teamChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -216,6 +285,149 @@
       $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
         $('#content').toggleClass('active');
+      });
+      
+      // Gráfico de Vendas Mensais
+      const salesCtx = document.getElementById('salesChart').getContext('2d');
+      const salesChart = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+          datasets: [{
+            label: 'Vendas (R$)',
+            data: [12000, 19000, 15000, 25000, 22000, 30000, 28000, 35000, 30000, 40000, 38000, 45000],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 2,
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return 'R$ ' + value.toLocaleString('pt-BR');
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Gráfico de Distribuição de Clientes
+      const clientsCtx = document.getElementById('clientsChart').getContext('2d');
+      const clientsChart = new Chart(clientsCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Ativos', 'Inativos', 'Novos'],
+          datasets: [{
+            data: [128, 12, 25],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.8)',
+              'rgba(255, 99, 132, 0.8)',
+              'rgba(75, 192, 192, 0.8)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+      
+      // Gráfico de Vendas por Categoria
+      const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+      const categoryChart = new Chart(categoryCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Eletrônicos', 'Roupas', 'Casa', 'Esportes', 'Livros'],
+          datasets: [{
+            label: 'Vendas (R$)',
+            data: [35000, 28000, 22000, 15000, 8000],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.7)',
+              'rgba(54, 162, 235, 0.7)',
+              'rgba(255, 206, 86, 0.7)',
+              'rgba(75, 192, 192, 0.7)',
+              'rgba(153, 102, 255, 0.7)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return 'R$ ' + value.toLocaleString('pt-BR');
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Gráfico de Desempenho da Equipe
+      const teamCtx = document.getElementById('teamChart').getContext('2d');
+      const teamChart = new Chart(teamCtx, {
+        type: 'radar',
+        data: {
+          labels: ['Vendas', 'Atendimento', 'Produtividade', 'Qualidade', 'Colaboração'],
+          datasets: [
+            {
+              label: 'Equipe A',
+              data: [85, 75, 90, 80, 70],
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 2
+            },
+            {
+              label: 'Equipe B',
+              data: [70, 85, 75, 90, 80],
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: {
+                display: true
+              },
+              suggestedMin: 0,
+              suggestedMax: 100
+            }
+          }
+        }
       });
     });
   </script>
